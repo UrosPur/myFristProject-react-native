@@ -4,25 +4,23 @@ import {TextInput, View, StyleSheet, Button} from "react-native";
 
 const textField = (props) => {
 
+        return (
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={styles.placeInput}
+                    placeholder='an awesome place'
+                    value={props.placeName}
+                    onChangeText={props.changeName}
+                />
 
-    return (
-        <View style={styles.inputContainer}>
-            <TextInput
-                style={styles.placeInput}
-                placeholder='an awesome place'
-                value={props.placeName}
-                onChangeText={props.changeName}
-            />
+                <Button
+                    onPress={props.placeSubmit}
+                    style={styles.placeButton}
+                    title="Add"/>
 
-            <Button
-                onPress={props.placeSubmit}
-                style={styles.placeButton}
-                title="Add"/>
+            </View>
 
-        </View>
-
-    );
-
+        );
 
 };
 
