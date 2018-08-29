@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, Button, TextInput, View} from 'react-native';
 import ListItem from './src/components/ListItem';
+import TextField from './src/components/TextField';
 
 export default class App extends React.Component {
 
@@ -52,19 +53,16 @@ export default class App extends React.Component {
 
         return (
             <View style={styles.container}>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.placeInput}
-                        placeholder='an awesome place'
-                        value={this.state.placeName}
-                        onChangeText={this.placeNameChangeHandler}
+
+                    <TextField
+
+                        placeName={this.state.placeName}
+                        changeName={this.placeNameChangeHandler}
+                        placeSubmit={this.placeSubmitHandler}
+
                     />
 
-                    <Button
-                        onPress={this.placeSubmitHandler}
-                        style={styles.placeButton}
-                        title="Add"/>
-                </View>
+
                 <View>
                     {placesOutput}
                 </View>
@@ -81,17 +79,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    inputContainer: {
-        // flex: 1,
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    placeInput: {
-        width: '70%'
-    },
-    placeButton: {
-        width: '30%'
-    }
+
 });
