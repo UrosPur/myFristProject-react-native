@@ -1,71 +1,66 @@
 import React from 'react';
-import {StyleSheet, Text, Button, TextInput, View} from 'react-native';
-import ListItem from './src/components/ListItem';
-import TextField from './src/components/TextField';
+import {StyleSheet, View} from 'react-native';
+import PlaceInput from './src/components/PlaceInput/PlaceInput';
+import PlaceList from './src/components/PlaceList/PlaceList';
+import placeImage from './src/assets/image.jpeg'
 
 export default class App extends React.Component {
 
     state = {
-
-        placeName: '',
         places: []
-
     }
 
-    placeNameChangeHandler = val => {
+    placeAddedHandeler = (placeName) => {
 
-        this.setState({
-            placeName: val
-        });
-
-    };
-
-    placeSubmitHandler = () => {
-
-        if (this.state.placeName.trim() === "") {
-            return;
-        }
 
         this.setState(prevState => {
 
             return {
-                places: prevState.places.concat(prevState.placeName)
+                places: prevState.places.concat({
+                    key: Math.random(),
+                    name: placeName,
+                    image: placeImage
+                    // image: {
+                    //     uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwxQrHNAHw9K1Dz_hQV-lBym4Ij59VRGllHagRxTzWmhjt7dLZ'
+                    // }
+                }),
 
             }
-
         });
 
+
+    };
+
+
+    placeDeletedHandeler = key => {
+
+        this.setState(prevState => {
+            return {
+                places: prevState.places.filter(place => {
+                    return place.key !== key;
+
+                })
+
+            };
+
+        });
     }
 
 
     render() {
 
-        const placesOutput = this.state.places.map((place, i) => (
-
-            <ListItem
-                key={i}
-                placeName={place}
-
-            />
-
-
-        ));
-
         return (
             <View style={styles.container}>
 
-                    <TextField
+                <PlaceInput
+                    onPlaceAdded={this.placeAddedHandeler}
+                />
+                <PlaceList
+                    places={this.state.places}
+                    onItemdeleted={this.placeDeletedHandeler}
+                />
 
-                        placeName={this.state.placeName}
-                        changeName={this.placeNameChangeHandler}
-                        placeSubmit={this.placeSubmitHandler}
 
-                    />
-
-
-                <View>
-                    {placesOutput}
-                </View>
             </View>
         );
     }
